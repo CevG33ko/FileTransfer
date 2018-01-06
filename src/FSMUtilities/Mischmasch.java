@@ -44,9 +44,9 @@ public class Mischmasch implements Runnable {
     }
 
     //receivePacket wird durch empfangen eines Pakets von Socket ausgeführt (Statemachine)
-    //TODO Methode zum Überprüfen der Checksumme(in FSMUtilies
-    //TODO Methode zum Überprüfen der Sequenznummer(in FSMUtilies
-    //TODO Methode um Package zu erstellen mit (ACK/NACK,Seq) // makeP(in FSMUtilies
+    //TODO  Überprüfen der Checksumme(in FSMUtilies
+    //TODO  Überprüfen der Sequenznummer(in FSMUtilies
+    //TODO  Package zu erstellen mit (ACK/NACK,Seq) // makeP(in FSMUtilies
     //TODO Methode zum weterleiten der Pakete (udt/UDP) // sendP
     //TODO Methode zur Übergabe an FileWriter
     public void run() {
