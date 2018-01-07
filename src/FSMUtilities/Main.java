@@ -1,5 +1,5 @@
 package FSMUtilities;
-
+//TODO Funktionen Testen
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.util.zip.Adler32;
@@ -82,15 +82,4 @@ public class Main {
         ACK, NACK
     }
 
-}
-
-class ByteUtils {
-    private static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-
-
-    public static long bytesToLong(byte[] bytes) {
-        buffer.put(bytes, 0, bytes.length);
-        buffer.flip();//need flip
-        return buffer.getLong();
-    }
 }
