@@ -11,26 +11,30 @@ public class UDPReceive implements Runnable {
     private static final int SIZE = 1410;
     public final int PORT = 6661;
     public byte[] buffer;
+    static DatagramSocket socket;
+    static DatagramPacket dgmPTemp;
+    static boolean firstPaket = true;
+    InetAddress clientAdress;
+    int clientPort;
 
-    // TODO UDP Chanel öffnen
-    //TODO Paket Empfangen
+
     //TODO an Main/ReceiverMain weitergeben und rcvPkt auslösen
+    // TODO rcvPaket als MEthode aufrufen Exceptions in main abfangen return=dgmP.getDAata
+    //ales soll von dieser Methode ausgehen
+
 
     @Override
     public void run() {
-        InetAddress clientAdress;
-        int clientPort;
+
         buffer = new byte[SIZE];
         try {
-            DatagramSocket socket = new DatagramSocket(PORT);
-            DatagramPacket dgmPTemp = new DatagramPacket(buffer, buffer.length);
-            awaitFirstPacket(socket, dgmPTemp);
+            socket = new DatagramSocket(PORT);
+            dgmPTemp = new DatagramPacket(buffer, buffer.length);
+            //awaitFirstPacket();
 
 
         } catch (SocketException socketE) {
             System.out.println("Problem Opening Socket");
-        } catch (IOException ioE) {
-            System.out.println("Problem Reading Package");
         }
 
         //TODO Antwort
@@ -38,17 +42,31 @@ public class UDPReceive implements Runnable {
 
     }
 
-    private void awaitFirstPacket(DatagramSocket socket, DatagramPacket dgmPTemp) throws IOException {
-        int clientPort;
+    // war mal receiveFirstPacket
+    public byte[] receiveP() throws IOException {
+
         socket.receive(dgmPTemp);
-        ReceiverMain.fsm(dgmPTemp.getData());
+        //  in rcvPaket verlegt ReceiverMain.fsm(dgmPTemp.getData());
         //TODO Paket überprüfen und an DatenStrom weitergeben
 
         //TODO Antwortadresse für alle eingeheden Verbindungen(funktioniert gerade nur für erste Verbindung)
         //TODO Moegliche Lösung wäre Verbindungspacka und neuer Thread für die einzelne Verbindung
         clientAdress = dgmPTemp.getAddress();
         clientPort = dgmPTemp.getPort();
+        return dgmPTemp.getData();
+    }
+    /*
+    private byte [] receiveP () throws IOException{
+        // hier returnen oder in awaitmethode?
+        return firstPaket ? awaitFirstPacket(): followingPakets();
+
+
     }
 
-    public void
+
+
+    public byte [] followingPakets() throws  IOException{
+        socket.receive(dgmPTemp);
+
+    }*/
 }

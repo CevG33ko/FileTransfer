@@ -17,10 +17,6 @@ public class Mischmasch implements Runnable {
     private int timeout;
     private State currentState;
 
-    /*  public RecieverRobattoh(byte[] buffer) {
-          this.buffer = buffer;
-          currentState = State.WAIT_FOR_ZERO;
-      }*/
     private void setTimeout() {
         //TODO Schätzung RTT
         //TODO Schätzung mit RTT Messung und RFC 2988
@@ -89,9 +85,7 @@ public class Mischmasch implements Runnable {
     }
 
     // all states of this FSM
-    enum State {
-        WAIT_FOR_ONE, WAIT_FOR_ZERO
-    }
+
 }
 //TODO? Soll die Datei enden? Soll neue Datei woanders anfangen?
 

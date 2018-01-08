@@ -4,10 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.util.zip.Adler32;
 
-public class Main {
-    Adler32 checker = new Adler32();
-    ;
-    ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+public class Methods {
+    static Adler32 checker = new Adler32();
+    static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
 
     public static void main(String[] args) {
         // write your code here
@@ -45,7 +44,9 @@ public class Main {
         return packet;
     }
 
-    public boolean confirmSum(byte[] rdtPaket) {
+    public static boolean[] confirmSumSeq(byte[] rdtPaket) {
+        boolean[] checkStatus = new boolean[2];
+        //confirmSum
         ByteArrayInputStream bais = new ByteArrayInputStream(rdtPaket);
         byte[] checksumA = new byte[8];
 
@@ -57,16 +58,24 @@ public class Main {
         checker.update(rdtPaket, 10, 1400);
         long calc = checker.getValue();
 
+        checkStatus[0] = sent == calc ? true : false;
 
-        return sent == calc ? true : false;
+        //Confirm Seqnum
+        byte[] seqnum = new byte[1];
+        bais.read(seqnum, 8, 1);
+
+        checkStatus[1] = seqnum[0] == 1 ? true : false;
+
+        return checkStatus;
     }
 
+
     //isAck
-    public boolean seqE1(byte seq) {
+    public static boolean seqE1(byte seq) {
         return seq == 1 ? true : false;
     }
 
-    public boolean seqE0(byte seq) {
+    public static boolean seqE0(byte seq) {
         return seq == 0 ? true : false;
     }
 
