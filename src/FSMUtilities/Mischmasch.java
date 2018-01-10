@@ -29,22 +29,18 @@ public class Mischmasch implements Runnable {
             switch (currentState) {
 
                 case WAIT_FOR_ONE:
-                    //TODO 3 Möglichkeiten des Paketzustands mit Abfrage und Reaktion implementieren (FSM)
+                    //TODO 3 Möglichkeiten des Paketzustands mit Abfrage und Reaktion implementieren (ReceiverFSM2ndtry)
                     break;
 
                 case WAIT_FOR_ZERO:
-                    //TODO 3 Möglichkeiten des Paketzustands mit Abfrage und Reaktion implementieren (FSM)
+                    //TODO 3 Möglichkeiten des Paketzustands mit Abfrage und Reaktion implementieren (ReceiverFSM2ndtry)
                     break;
             }
         }
     }
 
     //receivePacket wird durch empfangen eines Pakets von Socket ausgeführt (Statemachine)
-    //TODO  Überprüfen der Checksumme(in FSMUtilies
-    //TODO  Überprüfen der Sequenznummer(in FSMUtilies
-    //TODO  Package zu erstellen mit (ACK/NACK,Seq) // makeP(in FSMUtilies
-    //TODO Methode zum weterleiten der Pakete (udt/UDP) // sendP
-    //TODO Methode zur Übergabe an FileWriter
+
     public void run() {
         try {
             DatagramSocket s = new DatagramSocket(PORT);
@@ -84,7 +80,7 @@ public class Mischmasch implements Runnable {
 
     }
 
-    // all states of this FSM
+    // all states of this ReceiverFSM2ndtry
 
 }
 //TODO? Soll die Datei enden? Soll neue Datei woanders anfangen?

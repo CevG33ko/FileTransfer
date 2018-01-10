@@ -1,19 +1,20 @@
 package Sender;
 
 import FSMUtilities.Methods;
-// ABP Receiver FSM Implementation
-public class SenderMain {
+
+// ABP Receiver ReceiverFSM2ndtry Implementation
+public class SenderFSM {
     static byte[] sndP;
 
     public static enum state {
         WAIT_FOR_CALL_ONE, WAIT_FOR_CALL_ZERO, WAIT_FOR_ACK_0, WAIT_FOR_ACK_1
     }
 
-    //TODO checksum/integrity Check aus FSM Utilities
-    //TODO Check SeqNumber aus FSM Utilities
+    //TODO checksum/integrity Check aus ReceiverFSM2ndtry Utilities
+    //TODO Check SeqNumber aus ReceiverFSM2ndtry Utilities
     //TODO weitergeben an ToData
 
-    // ABP Sender FSM Implementation
+    // ABP Sender ReceiverFSM2ndtry Implementation
     public class SenderReceiverMain implements Runnable {
 
         state currentState = state.WAIT_FOR_CALL_ZERO;
@@ -58,8 +59,8 @@ public class SenderMain {
                 }
             }
 
-            //TODO checksum/integrity Check aus FSM Utilities
-            //TODO Check SeqNumber aus FSM Utilities
+            //TODO checksum/integrity Check aus ReceiverFSM2ndtry Utilities
+            //TODO Check SeqNumber aus ReceiverFSM2ndtry Utilities
 
             //TODO weitergeben an ToData
 
@@ -67,4 +68,24 @@ public class SenderMain {
         }
 
         //TODO Zustandsmaschine implementieren
+        private byte[] makeP(SharedMethods.acks ack, boolean seq, byte[] data) {
+
+            byte[] packet = new byte[data.length + 10];
+            //checksum
+            checker.update(data);
+            long checksum = checker.getValue();
+            byte[] checksumBytes = longToByteArray(checksum);
+            // Wrap data in reliable data transfer packet
+            setAck(ack, packet);
+
+            for (int i = 0; i < 8; i++) {
+                if (i < 8)
+                    packet[i] = checksumBytes[i];
+                if (i == 8)
+                    setAck(ack, packet);
+                else
+                    packet[i] = data[i + 8];
+            }
+            return packet;
+        }
 }

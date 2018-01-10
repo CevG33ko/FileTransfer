@@ -8,7 +8,7 @@ public class Main {
     public void main(String[] args) {
         UDPReceive udt = new UDPReceive();
         udt.run();
-        ReceiverMain fsm = new ReceiverMain();
+        ReceiverFSM fsm = new ReceiverFSM();
         fsm.run();
         ToData writer = new ToData();
         writer.run();

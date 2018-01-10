@@ -18,7 +18,7 @@ public class UDPReceive implements Runnable {
     int clientPort;
 
 
-    //TODO an Main/ReceiverMain weitergeben und rcvPkt auslösen
+    //TODO an Main/ReceiverFSM weitergeben und rcvPkt auslösen
     // TODO rcvPaket als MEthode aufrufen Exceptions in main abfangen return=dgmP.getDAata
     //ales soll von dieser Methode ausgehen
 
@@ -43,18 +43,26 @@ public class UDPReceive implements Runnable {
     }
 
     // war mal receiveFirstPacket
-    public byte[] receiveP() throws IOException {
+    public boolean receiveP(byte[] buffer) {
 
-        socket.receive(dgmPTemp);
+        try {
+            //TODO was wenn neue Adresse?
+            socket.receive(dgmPTemp);
+            clientAdress = dgmPTemp.getAddress();
+            clientPort = dgmPTemp.getPort();
+            buffer = dgmPTemp.getData();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
         //  in rcvPaket verlegt ReceiverMain.fsm(dgmPTemp.getData());
         //TODO Paket überprüfen und an DatenStrom weitergeben
 
         //TODO Antwortadresse für alle eingeheden Verbindungen(funktioniert gerade nur für erste Verbindung)
         //TODO Moegliche Lösung wäre Verbindungspacka und neuer Thread für die einzelne Verbindung
-        clientAdress = dgmPTemp.getAddress();
-        clientPort = dgmPTemp.getPort();
-        return dgmPTemp.getData();
+
     }
+
     /*
     private byte [] receiveP () throws IOException{
         // hier returnen oder in awaitmethode?

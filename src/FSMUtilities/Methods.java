@@ -4,7 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.util.zip.Adler32;
 
-public class Methods {
+  /*abstract class state {
+      // Default behaviour
     static Adler32 checker = new Adler32();
     static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
 
@@ -15,7 +16,7 @@ public class Methods {
 
     //Wraps Data in ABP Package
     //8 Bytes are added for checksum + 2 for Ack and Sequence Number
-    public byte[] makeP(acks ack, boolean seq, byte[] data) {
+    public static byte[] makeP(acks ack, boolean seq, byte[] data) {
 
 
         byte[] packet = new byte[data.length + 10];
@@ -30,9 +31,9 @@ public class Methods {
 
         // Wrap data in reliable data transfer packet
         setAck(ack, packet);
-            /* Warum geht die scheiße als if aber nciht so? XO
+            *//* Warum geht die scheiße als if aber nciht so? XO
         ack == acks.ACK ?  packet[8]=1: packet[8]=0;
-            */
+            *//*
         for (int i = 0; i < 8; i++) {
             if (i < 8)
                 packet[i] = checksumBytes[i];
@@ -79,16 +80,13 @@ public class Methods {
         return seq == 0 ? true : false;
     }
 
-    private void setAck(acks ack, byte[] packet) {
+    private static void setAck(acks ack, byte[] packet) {
         if (ack == acks.ACK)
             packet[8] = 1;
         else
             packet[8] = 0;
     }
 
-    //enums
-    enum acks {
-        ACK, NACK
-    }
 
-}
+
+}*/
