@@ -36,7 +36,6 @@ public class SenderFSM2ndTry {
 abstract class State {
     static Adler32 checker = new Adler32();
     static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-
     private static void setAck(acks ack, byte[] packet, byte[] anotherPacket) {
         if (ack == acks.ACK) {
             packet[1] = 1;
@@ -86,6 +85,10 @@ abstract class State {
         byte[] answer = new byte[2];
         byte[] packet = new byte[data.length + 10];
         //TODO checksum verbessern(muss seq,ack  und data beinhalten oder?)
+        ByteArrayInputStream bais = new ByteArrayInputStream(answer, data);
+        //make packet
+        //update checker with packet
+        
         checker.update(data);
         long checksum = checker.getValue();
         byte[] checksumBytes = longToByteArray(checksum);

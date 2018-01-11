@@ -1,5 +1,6 @@
 package Receiver;
 
+import javax.sound.sampled.Port;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -42,6 +43,7 @@ public class UDPReceive implements Runnable {
 
     }
 
+    //Wird von Oberer Statemachine aufgerufen
     // war mal receiveFirstPacket
     public boolean receiveP(byte[] buffer) {
 
@@ -55,12 +57,17 @@ public class UDPReceive implements Runnable {
         } catch (IOException e) {
             return false;
         }
+
         //  in rcvPaket verlegt ReceiverMain.fsm(dgmPTemp.getData());
-        //TODO Paket überprüfen und an DatenStrom weitergeben
+        // Antwortadresse für alle eingeheden Verbindungen(funktioniert gerade nur für erste Verbindung)
+        // Moegliche Lösung wäre Verbindungspacka und neuer Thread für die einzelne Verbindung
+        //TODO  an DatenStrom weitergeben ReceiverFSM
+    }
 
-        //TODO Antwortadresse für alle eingeheden Verbindungen(funktioniert gerade nur für erste Verbindung)
-        //TODO Moegliche Lösung wäre Verbindungspacka und neuer Thread für die einzelne Verbindung
-
+    public void sendPacket(byte[] abpPacket) throws IOException {
+        dgmPTemp = new DatagramPacket(abpPacket, abpPacket.length, clientAdress, PORT);
+        socket.send(dgmPTemp);
+        System.out.println("SENDER: Paket gesendet.");
     }
 
     /*
